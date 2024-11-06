@@ -1,4 +1,5 @@
 using Customer.Web.Components;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,12 @@ builder.AddServiceDefaults();
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddRazorComponents().AddInteractiveWebAssemblyComponents();
+
 builder.Services.AddControllers();
+
+builder.Services.AddRadzenComponents();
 
 var app = builder.Build();
 

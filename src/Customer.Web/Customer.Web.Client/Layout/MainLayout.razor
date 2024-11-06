@@ -1,23 +1,58 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<RadzenComponents @rendermode="InteractiveWebAssembly" />
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+<RadzenLayout>
 
-        <article class="content px-4">
+    <RadzenHeader class="shadow-none">
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenSidebarToggle Click="@(() => _sidebarExpanded = !_sidebarExpanded)" />
+            <RadzenRow AlignItems="AlignItems.Center">
+                Customer Database
+            </RadzenRow>
+        </RadzenStack>
+    </RadzenHeader>
+    <RadzenSidebar Responsive="false"
+                   Style="width: max-content">
+        <RadzenPanelMenu DisplayStyle="@(_sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)"
+                         ShowArrow="@_sidebarExpanded">
+
+            <RadzenPanelMenuItem Icon="home"
+                                 Path="/"
+                                 Text="Home" />
+
+            <RadzenPanelMenuItem Icon="tag"
+                                 Path="/status"
+                                 Text="Status" />
+
+            <RadzenPanelMenuItem Icon="sunny"
+                                 Path="/weather"
+                                 Text="Weather" />
+
+            <RadzenPanelMenuItem Icon="tag"
+                                 Path="/counter"
+                                 Text="Counter" />
+        </RadzenPanelMenu>
+    </RadzenSidebar>
+    <RadzenBody>
+        <div class="p-4">
             @Body
-        </article>
-    </main>
+        </div>
+    </RadzenBody>
+    <RadzenFooter>
+        <GlasOrbitFooter AppName="Glas Orbit - Administration" />
+    </RadzenFooter>
+</RadzenLayout>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a class="reload"
+       href="">
+        Reload
+    </a>
+    <a class="dismiss">🗙</a>
 </div>
 
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
-</div>
+@code {
+    private bool _sidebarExpanded = true;
+}

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Radzen
+@using Radzen.Blazor
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,16 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
     <link rel="stylesheet" href="@Assets["lib/bootstrap/dist/css/bootstrap.min.css"]" />
-    <link rel="stylesheet" href="@Assets["app.css"]" />
+    <link rel="stylesheet" href="@Assets["styles/app.css"]" />
     <link rel="stylesheet" href="@Assets["Customer.Web.styles.css"]" />
     <ImportMap />
     <link rel="icon" type="image/png" href="favicon.png" />
     <HeadOutlet @rendermode="InteractiveWebAssembly" />
+    <RadzenTheme @rendermode="InteractiveWebAssembly"
+                 Theme="standard" />
 </head>
 
 <body>
     <Routes @rendermode="InteractiveWebAssembly" />
     <script src="_framework/blazor.web.js"></script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Colors).Assembly.GetName().Version)"></script>
 </body>
 
 </html>
