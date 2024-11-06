@@ -15,6 +15,7 @@
     <ProjectReference Include="..\..\Customer.ServiceDefaults\Customer.ServiceDefaults.csproj" />
     <ProjectReference Include="..\Customer.Web.Client\Customer.Web.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.0-rc.2.24474.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
     <PackageReference Include="Radzen.Blazor" Version="5.5.4" />
   </ItemGroup>
 

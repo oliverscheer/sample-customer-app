@@ -1,5 +1,7 @@
 using Customer.Web.Components;
 using Radzen;
+using Customer.DatabaseLogic;
+using Microsoft.EntityFrameworkCore; // Add this using directive
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,11 @@ builder.Services.AddRazorComponents().AddInteractiveWebAssemblyComponents();
 builder.Services.AddControllers();
 
 builder.Services.AddRadzenComponents();
+
+// Replace the problematic line with the correct method to add DbContext
+string connectionString = builder.Configuration.GetConnectionString("sqldb"); 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
@@ -41,5 +48,31 @@ app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(Customer.Web.Client._Imports).Assembly);
+
+
+app.MapGet("/createdb", async (AppDbContext context) =>
+{
+    // You wouldn't normally do this on every call,
+    // but doing it here just to make this simple.
+    context.Database.EnsureCreated();
+
+    return new
+    {
+        status = "db created"
+    };
+});
+
+
+app.MapGet("/dropdb", async (AppDbContext context) =>
+{
+    // You wouldn't normally do this on every call,
+    // but doing it here just to make this simple.
+    context.Database.EnsureDeleted();
+
+    return new
+    {
+        status = "db deleted"
+    };
+});
 
 app.Run();
