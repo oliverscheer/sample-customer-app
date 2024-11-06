@@ -1,0 +1,26 @@
+﻿@page "/status"
+@inject HttpClient Http
+
+<h3>Status</h3>
+<p>Result: @StatusResult</p>
+
+@if(!string.IsNullOrEmpty(ErrorMessage)){
+    <p>Error: @ErrorMessage</p>
+}
+
+@code {
+    private string StatusResult = "Loading...";
+    private string? ErrorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try 
+        {
+            StatusResult = await Http.GetStringAsync("api/status");
+        }
+        catch(Exception exc) 
+        {
+            ErrorMessage = exc.Message;
+        }
+    }
+}
