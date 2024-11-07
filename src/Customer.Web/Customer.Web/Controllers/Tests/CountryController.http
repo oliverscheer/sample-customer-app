@@ -1,0 +1,4 @@
+@baseurl=https://localhost:7153/api/country
+
+### Get all groups
+GET {{baseurl}}

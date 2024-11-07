@@ -3,20 +3,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations;
 
-namespace Customer.DatabaseLogic.Entities
+namespace Customer.BusinessLogic.Database.Entities
 {
     [EntityTypeConfiguration(typeof(CountryConfiguration))]
-    public class Country
+    public class CountryEntity : BaseEntity
     {
-        [Key]
-        [StringLength(2)]
-        public string Id { get; set; } = default!;
         public string Name { get; set; } = default!;
+        [StringLength(2)]
+        public string Code { get; set; } = default!;
     }
 
-    internal class CountryConfiguration : IEntityTypeConfiguration<Country>
+    internal class CountryConfiguration : IEntityTypeConfiguration<CountryEntity>
     {
-        public void Configure(EntityTypeBuilder<Country> builder)
+        public void Configure(EntityTypeBuilder<CountryEntity> builder)
         {
             string tableName = "Countries";
             builder.ToTable(tableName, "dbo");
@@ -28,13 +27,15 @@ namespace Customer.DatabaseLogic.Entities
                 .IsUnique();
 
             // Seeding All Countries
-            List<Country> countries = [];
+            List<CountryEntity> countries = [];
             foreach (var country in Countries.All)
             {
-                Country newCountry = new()
+                CountryEntity newCountry = new()
                 {
-                    Id = country.Value,
-                    Name = country.Key
+                    Id = country.Id,
+                    Name = country.Name,
+                    Code = country.Code
+
                 };
                 countries.Add(newCountry);
             }

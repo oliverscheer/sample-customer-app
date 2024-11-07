@@ -1,4 +1,4 @@
-﻿using Customer.DatabaseLogic;
+﻿using Customer.BusinessLogic.Services.Country;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Customer.Web.Controllers
@@ -7,17 +7,17 @@ namespace Customer.Web.Controllers
     [Route("api/[controller]")]
     public class CountryController : ControllerBase
     {
-        private readonly AppDbContext _appDbContext;
+        private readonly CountryService _countryService;
 
-        public CountryController(AppDbContext appDbContext)
+        public CountryController(CountryService countryService)
         {
-            _appDbContext = appDbContext;
+            _countryService = countryService;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var result = _appDbContext.Countries.ToList();
+            var result = await _countryService.GetCountries();
             return Ok(result);
         }
     }

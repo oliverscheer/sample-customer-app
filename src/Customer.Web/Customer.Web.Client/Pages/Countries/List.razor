@@ -1,0 +1,13 @@
+﻿@page "/countries"
+@using global::Customer.Web.Client.APIs
+
+@inject ICountryService CountryService
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await CountryService.GetAllCountries();
+    }
+
+}

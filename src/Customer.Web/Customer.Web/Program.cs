@@ -1,5 +1,8 @@
+using Customer.BusinessLogic.Database.Repositories;
+using Customer.BusinessLogic.Services.Country;
 using Customer.DatabaseLogic;
 using Customer.Web.Components;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Radzen;
 
@@ -14,12 +17,18 @@ builder.Services.AddRazorComponents()
 builder.Services.AddRazorComponents().AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddControllers();
-
 builder.Services.AddRadzenComponents();
 
 string connectionString = builder.Configuration.GetConnectionString("sqldb"); 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddTransient<CountryService>();
+builder.Services.AddTransient<CountryRepository>();
+
+// TODO: Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -29,6 +38,9 @@ app.MapDefaultEndpoints();
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
+    
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {
