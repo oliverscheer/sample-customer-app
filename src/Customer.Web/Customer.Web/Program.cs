@@ -1,7 +1,7 @@
-using Customer.Web.Components;
-using Radzen;
 using Customer.DatabaseLogic;
-using Microsoft.EntityFrameworkCore; // Add this using directive
+using Customer.Web.Components;
+using Microsoft.EntityFrameworkCore;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +17,6 @@ builder.Services.AddControllers();
 
 builder.Services.AddRadzenComponents();
 
-// Replace the problematic line with the correct method to add DbContext
 string connectionString = builder.Configuration.GetConnectionString("sqldb"); 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
